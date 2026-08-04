@@ -33,13 +33,13 @@ jobs:
       - name: Verify EXE
         shell: pwsh
         run: |
-          Get-Item desktop\dist\PDFConverter.exe | Select-Object Name, Length
+          Get-Item dist\PDFConverter.exe | Select-Object Name, Length
 
       - name: Upload EXE artifact
         uses: actions/upload-artifact@v4
         with:
           name: PDFConverter-Windows
-          path: desktop/dist/PDFConverter.exe
+          path: dist/PDFConverter.exe
           if-no-files-found: error
 
   # ----------------------------------------------------------------- Android
