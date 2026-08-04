@@ -10,7 +10,7 @@ import os
 
 from PyInstaller.utils.hooks import collect_all
 
-_here = os.path.dirname(os.path.abspath(SPECPATH))     # desktop/
+_here = os.path.abspath(SPECPATH)                      # desktop/ (SPECPATH = spec's directory)
 _repo = os.path.abspath(os.path.join(_here, ".."))     # repo root
 
 block_cipher = None
