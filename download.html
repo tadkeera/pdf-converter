@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF Converter — تحميل التطبيق</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI', Tahoma, Arial, sans-serif; background:#f0f4f8; color:#223; }
+  .hero { background:linear-gradient(135deg,#1F4E79 0%,#2E75B6 100%); color:#fff; text-align:center; padding:48px 16px 40px; }
+  .hero h1 { font-size:34px; margin-bottom:10px; }
+  .hero p { font-size:17px; opacity:.92; max-width:720px; margin:0 auto; line-height:1.7; }
+  .badge { display:inline-block; background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.35);
+            border-radius:20px; padding:4px 14px; font-size:13px; margin:6px 4px; }
+  .wrap { max-width:960px; margin:0 auto; padding:28px 16px 60px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 6px 24px rgba(31,78,121,.10);
+           padding:26px; margin-bottom:24px; }
+  .card h2 { color:#1F4E79; margin-bottom:14px; font-size:22px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  @media (max-width:700px) { .grid { grid-template-columns:1fr; } }
+  .dl { background:#fff; border:2px solid #e3ebf3; border-radius:14px; padding:22px; text-align:center;
+         transition:.2s; }
+  .dl:hover { border-color:#1F4E79; transform:translateY(-3px); box-shadow:0 8px 20px rgba(31,78,121,.15); }
+  .dl .icon { font-size:44px; }
+  .dl h3 { margin:8px 0 4px; color:#1F4E79; }
+  .dl .meta { color:#777; font-size:13px; margin-bottom:12px; }
+  .btn { display:inline-block; background:#1F4E79; color:#fff !important; text-decoration:none;
+          padding:12px 26px; border-radius:30px; font-size:16px; font-weight:bold; }
+  .btn.green { background:#2E7D32; }
+  .btn:hover { filter:brightness(1.1); }
+  .qrrow { display:flex; gap:20px; justify-content:center; flex-wrap:wrap; margin-top:14px; }
+  .qrbox { text-align:center; }
+  .qrbox img { width:150px; height:150px; border:1px solid #ddd; border-radius:10px; }
+  .qrbox div { font-size:12px; color:#666; margin-top:4px; }
+  .features { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:12px; }
+  .feat { background:#f7fafc; border-radius:10px; padding:14px; border-right:4px solid #2E75B6; }
+  .feat b { color:#1F4E79; display:block; margin-bottom:4px; }
+  .feat span { font-size:13.5px; color:#445; line-height:1.6; }
+  .steps { list-style:none; counter-reset:s; }
+  .steps li { counter-increment:s; background:#f7fafc; border-radius:10px; padding:12px 46px 12px 14px;
+               margin-bottom:10px; position:relative; font-size:15px; }
+  .steps li::before { content:counter(s); position:absolute; right:12px; top:12px; width:24px; height:24px;
+        background:#1F4E79; color:#fff; border-radius:50%; text-align:center; font-size:13px; line-height:24px; font-weight:bold; }
+  .foot { text-align:center; color:#889; font-size:13px; padding:20px; }
+  a { color:#1F4E79; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>📄➜📊 PDF Converter</h1>
+  <p>تطبيق شامل يحوّل <b>أي عدد من ملفات PDF</b> إلى <b>ملفات Excel منفصلة</b> — حتى <b>1000 صفحة</b> للملف الواحد،
+     مع استخراج <b>اسم التاجر / الوكيل</b> تلقائياً كعنوان للملف، وإمكانية <b>استثناء أي صفحة</b> برقمها أو بعنوانها.</p>
+  <div style="margin-top:14px;">
+    <span class="badge">♾️ عدد غير محدود من الملفات</span>
+    <span class="badge">📄 حتى 1000 صفحة للملف</span>
+    <span class="badge">🏷️ اسم التاجر تلقائياً</span>
+    <span class="badge">🚫 استثناء الصفحات</span>
+    <span class="badge">🌐 دعم كامل للعربية</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="card">
+    <h2>⬇️ تحميل التطبيق</h2>
+    <div class="grid">
+      <div class="dl">
+        <div class="icon">🤖</div>
+        <h3>نسخة أندرويد (APK)</h3>
+        <div class="meta">Android 8.0+ • موقّع وجاهز للتثبيت • 13 MB</div>
+        <a class="btn" href="https://github.com/tadkeera/pdf-converter/releases/download/v1.0.0/PDFConverter-Android-v1.0.0.apk" download>📱 تحميل الـ APK الآن</a>
+      </div>
+      <div class="dl">
+        <div class="icon">🪟</div>
+        <h3>نسخة ويندوز (EXE)</h3>
+        <div class="meta">Windows 10/11 • ملف واحد مكتفٍ ذاتياً • 40 MB</div>
+        <a class="btn green" href="https://github.com/tadkeera/pdf-converter/releases/download/v1.0.0/PDFConverter-Windows-v1.0.0.exe" download>💻 تحميل الـ EXE الآن</a>
+      </div>
+    </div>
+
+    <div class="qrrow">
+      <div class="qrbox">
+        <img src="data:image/png;base64,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" alt="QR لتحميل الـ APK">
+        <div>امسح الرمز لتحميل الـ APK<br>مباشرة على هاتفك</div>
+      </div>
+      <div class="qrbox">
+        <img src="data:image/png;base64,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" alt="QR للمستودع">
+        <div>امسح الرمز لفتح مستودع<br>GitHub والمصدر الكامل</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>✨ المميزات</h2>
+    <div class="features">
+      <div class="feat"><b>♾️ عدد ملفات غير محدود</b><span>اختر أي عدد من ملفات PDF دفعة واحدة — كل ملف يتحول إلى ملف Excel منفصل.</span></div>
+      <div class="feat"><b>📄 حتى 1000 صفحة</b><span>الحد الأقصى للصفحات قابل للتعديل (من 1 إلى 100,000 صفحة للملف).</span></div>
+      <div class="feat"><b>🏷️ اسم التاجر/الوكيل</b><span>استخراج تلقائي (عربي/إنجليزي) وجعله عنوان ملف الـ Excel، أو إدخال الاسم يدوياً.</span></div>
+      <div class="feat"><b>🚫 استثناء الصفحات</b><span>بأرقامها مثل 1,3,5-9 — أو بعنوانها/كلماتها مثل «شروط، ملخص».</span></div>
+      <div class="feat"><b>📊 جداول حقيقية</b><span>كشف جداول PDF (بخطوط أو بدون) وترتيبها خلية بخلية في Excel باحترافية.</span></div>
+      <div class="feat"><b>🌐 عربي بالكامل</b><span>أوراق Excel باتجاه RTL، تطبيع النصوص العربية، وتجاهل الصفحات الفارغة تلقائياً.</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 طريقة الاستخدام</h2>
+    <ol class="steps">
+      <li><b>أضف الملفات:</b> اضغط «إضافة ملفات» واختر واحداً أو أكثر من ملفات PDF (أو أضف مجلداً كاملاً).</li>
+      <li><b>اضبط الخيارات:</b> الحد الأقصى للصفحات، الصفحات المستثناة (أرقام أو كلمات)، واسم التاجر (تلقائي أو يدوي).</li>
+      <li><b>ابدأ التحويل:</b> اضغط «بدء التحويل» وتابع سجل العملية وشريط التقدم.</li>
+      <li><b>استلم ملفاتك:</b> كل PDF يصبح ملف .xlsx منفصلاً باسم التاجر/الوكيل في مجلد الإخراج.</li>
+    </ol>
+  </div>
+
+  <div class="card" style="text-align:center;">
+    <h2>🔗 الروابط</h2>
+    <p style="margin-bottom:12px;">
+      <a href="https://github.com/tadkeera/pdf-converter">المستودع والمصدر الكامل</a> •
+      <a href="https://github.com/tadkeera/pdf-converter/releases">صفحة الإصدارات</a> •
+      <a href="https://github.com/tadkeera/pdf-converter/releases/download/v1.0.0/PDFConverter-Android-v1.0.0.apk">رابط الـ APK المباشر</a> •
+      <a href="https://github.com/tadkeera/pdf-converter/releases/download/v1.0.0/PDFConverter-Windows-v1.0.0.exe">رابط الـ EXE المباشر</a>
+    </p>
+    <p style="font-size:13px;color:#778;">الإصدار v1.0.0 — مبني تلقائياً عبر GitHub Actions (Windows + Android)</p>
+  </div>
+
+</div>
+
+<div class="foot">PDF Converter © 2026 — tadkeera · محوّل PDF إلى Excel شامل ومجاني</div>
+
+</body>
+</html>
