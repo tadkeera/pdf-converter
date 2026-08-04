@@ -40,9 +40,24 @@ from core import (
 from extractor import extract_merchant_name
 
 APP_TITLE = "محوّل PDF إلى Excel — PDF Converter"
-APP_VERSION = "1.0.0"
+APP_VERSION = "1.1.0"
 
 DEFAULT_MAX_PAGES = 1000
+
+OUTPUT_FOLDER_NAME = "PDF CONVERTER"
+
+
+def default_output_dir():
+    """The 'PDF CONVERTER' folder on the local disk (Documents, else home)."""
+    home = os.path.expanduser("~")
+    for base in (os.path.join(home, "Documents"), home):
+        try:
+            folder = os.path.join(base, OUTPUT_FOLDER_NAME)
+            os.makedirs(folder, exist_ok=True)
+            return folder
+        except Exception:
+            continue
+    return os.path.join(home, OUTPUT_FOLDER_NAME)
 
 
 class PdfConverterApp:
@@ -119,8 +134,8 @@ class PdfConverterApp:
         # output folder
         frow = tk.Frame(opt)
         frow.pack(fill="x", padx=6, pady=4)
-        tk.Label(frow, text="مجلد الإخراج:").pack(anchor="w")
-        self.out_dir_var = tk.StringVar(value=os.path.join(os.path.expanduser("~"), "PDF_Excel_Output"))
+        tk.Label(frow, text=f"مجلد الإخراج (يُنشأ تلقائياً باسم «{OUTPUT_FOLDER_NAME}»):").pack(anchor="w")
+        self.out_dir_var = tk.StringVar(value=default_output_dir())
         tk.Entry(frow, textvariable=self.out_dir_var).pack(fill="x", pady=2)
         tk.Button(frow, text="اختيار مجلد…", command=self.choose_out_dir).pack(anchor="w")
 
@@ -265,7 +280,13 @@ class PdfConverterApp:
         if not self.pdf_files:
             messagebox.showwarning("تنبيه", "أضف ملفات PDF أولاً")
             return
-        out_dir = self.out_dir_var.get().strip() or os.getcwd()
+        out_dir = self.out_dir_var.get().strip() or default_output_dir()
+        # Make sure the "PDF CONVERTER" folder exists on the local disk
+        try:
+            os.makedirs(out_dir, exist_ok=True)
+        except OSError as e:
+            messagebox.showerror("خطأ", f"تعذر إنشاء مجلد الإخراج:\n{e}")
+            return
         try:
             max_pages = int(self.max_pages_var.get())
         except (tk.TclError, ValueError):
@@ -279,7 +300,8 @@ class PdfConverterApp:
         self.log_text.configure(state="normal")
         self.log_text.delete("1.0", "end")
         self.log_text.configure(state="disabled")
-        self._log(f"بدء التحويل: {len(self.pdf_files)} ملف → {out_dir}")
+        self._log(f"📁 مجلد الإخراج: {out_dir}")
+        self._log(f"بدء التحويل: {len(self.pdf_files)} ملف")
         self._log(f"الحد الأقصى للصفحات: {max_pages} | استثناء أرقام: {skip_nums or '—'} | "
                   f"استثناء كلمات: {skip_kws or '—'}")
 

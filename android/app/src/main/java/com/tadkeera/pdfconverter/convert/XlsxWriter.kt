@@ -1,7 +1,6 @@
 package com.tadkeera.pdfconverter.convert
 
-import java.io.File
-import java.io.FileOutputStream
+import java.io.OutputStream
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
@@ -18,8 +17,8 @@ object XlsxWriter {
         val pageNumber: Int
     )
 
-    fun write(file: File, sheets: List<SheetData>, merchant: String?) {
-        ZipOutputStream(FileOutputStream(file)).use { zip ->
+    fun write(out: OutputStream, sheets: List<SheetData>, merchant: String?) {
+        ZipOutputStream(out).use { zip ->
             zip.putNextEntry(ZipEntry("[Content_Types].xml")); zip.write(contentTypes(sheets.size)); zip.closeEntry()
             zip.putNextEntry(ZipEntry("_rels/.rels")); zip.write(rootRels()); zip.closeEntry()
             zip.putNextEntry(ZipEntry("docProps/core.xml")); zip.write(coreProps(merchant)); zip.closeEntry()

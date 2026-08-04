@@ -33,4 +33,7 @@
     <string name="merchant">Merchant/Agent</string>
     <string name="done">Conversion finished ✔</string>
     <string name="finished">Finished converting</string>
+    <string name="output_folder_info">📁 The app will create a folder named "%1$s" in local storage and save the Excel files inside it</string>
+    <string name="saved_in_folder">All files saved inside the "%1$s" folder in local storage</string>
+    <string name="storage_permission_needed">Storage permission is needed to create the "PDF CONVERTER" folder</string>
 </resources>

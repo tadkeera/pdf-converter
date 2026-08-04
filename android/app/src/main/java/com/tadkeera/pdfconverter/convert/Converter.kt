@@ -1,8 +1,9 @@
 package com.tadkeera.pdfconverter.convert
 
+import android.content.Context
+import android.net.Uri
 import com.tadkeera.pdfconverter.util.TextUtils
 import com.tom_roush.pdfbox.pdmodel.PDDocument
-import java.io.File
 import java.io.InputStream
 
 data class ConvertOptions(
@@ -20,20 +21,23 @@ data class FileResult(
     val pagesConverted: Int,
     val pagesSkipped: Int,
     val merchant: String?,
-    val error: String?
+    val error: String?,
+    val outputPath: String = "",
+    val outputUri: Uri? = null
 )
 
 /**
- * Converts one PDF stream into one .xlsx file inside outDir.
+ * Converts one PDF stream into one .xlsx file, saved automatically inside
+ * the "PDF CONVERTER" folder on the device's local storage.
  * pageCallback reports 1-based page numbers as they are processed.
  */
 object Converter {
 
     fun convert(
+        context: Context,
         stream: InputStream,
         inputName: String,
         options: ConvertOptions,
-        outDir: File,
         pageCallback: (Int) -> Unit = {}
     ): FileResult {
         return try {
@@ -92,10 +96,32 @@ object Converter {
                     merchant,
                     fallback = inputName.removeSuffix(".pdf").ifBlank { "output" }
                 )
-                val outFile = File(outDir, "$base.xlsx")
-                XlsxWriter.write(outFile, sheets, merchant)
+                val fileName = "$base.xlsx"
 
-                FileResult(inputName, outFile.name, sheets.size, skipped, merchant, null)
+                val sink = StorageHelper.createSink(context, fileName)
+                    ?: return FileResult(
+                        inputName, fileName, 0, skipped, merchant,
+                        "تعذر إنشاء مجلد «PDF CONVERTER» في ذاكرة التخزين"
+                    )
+
+                try {
+                    val out = StorageHelper.openOutput(context, sink)
+                        ?: return FileResult(
+                            inputName, fileName, sheets.size, skipped, merchant,
+                            "تعذر فتح مجلد «PDF CONVERTER» في ذاكرة التخزين"
+                        )
+                    out.use { XlsxWriter.write(it, sheets, merchant) }
+                    StorageHelper.markPublished(context, sink)
+                } catch (e: Exception) {
+                    StorageHelper.deleteSink(context, sink)
+                    throw e
+                }
+
+                FileResult(
+                    inputName, fileName, sheets.size, skipped, merchant, null,
+                    outputPath = sink.displayPath,
+                    outputUri = (sink as? StorageHelper.Sink.MediaStoreUri)?.uri
+                )
             }
         } catch (e: Exception) {
             FileResult(inputName, "", 0, 0, null, e.message ?: "خطأ غير متوقع")

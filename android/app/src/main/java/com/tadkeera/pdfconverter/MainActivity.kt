@@ -1,9 +1,10 @@
 package com.tadkeera.pdfconverter
 
-import android.app.Activity
-import android.content.ContentResolver
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,11 +26,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tadkeera.pdfconverter.convert.ConvertOptions
 import com.tadkeera.pdfconverter.convert.Converter
 import com.tadkeera.pdfconverter.convert.FileResult
+import com.tadkeera.pdfconverter.convert.StorageHelper
 import com.tadkeera.pdfconverter.util.TextUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
@@ -62,6 +64,13 @@ class MainActivity : AppCompatActivity() {
     private val pickMultiple =
         registerForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris: List<Uri>? ->
             uris?.forEach { addPdf(it) }
+        }
+
+    // Android 9 and below need the storage permission to write the
+    // "PDF CONVERTER" folder. Android 10+ uses MediaStore (no permission).
+    private val storagePerm =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            if (granted) runConversion() else toast(getString(R.string.storage_permission_needed))
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -136,6 +145,19 @@ class MainActivity : AppCompatActivity() {
             toast(getString(R.string.add_files_first))
             return
         }
+        // Android 9 and below: ask for the storage permission first.
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P &&
+            ContextCompat.checkSelfPermission(
+                this, Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            storagePerm.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            return
+        }
+        runConversion()
+    }
+
+    private fun runConversion() {
         val maxPages = etMaxPages.text.toString().toIntOrNull() ?: 1000
         val skipNumbers = TextUtils.parseSkipNumbers(etSkipPages.text.toString())
         val skipKeywords = TextUtils.parseKeywords(etSkipKeywords.text.toString())
@@ -153,9 +175,9 @@ class MainActivity : AppCompatActivity() {
         results.clear()
         btnShare.isVisible = false
         log("${getString(R.string.starting)} ${pdfUris.size} ${getString(R.string.files)}")
+        log(getString(R.string.output_folder_info, StorageHelper.FOLDER_NAME))
         log("${getString(R.string.max_pages_label)}: $maxPages | ${getString(R.string.skip_pages_label)}: ${skipNumbers.ifEmpty { "—" }} | ${getString(R.string.skip_keywords_label)}: ${skipKeywords.ifEmpty { "—" }}")
 
-        val outDir = File(getExternalFilesDir(null), "PDFConverter").apply { mkdirs() }
         val total = pdfUris.size
         val inputs = pdfUris.toList()
         val names = pdfNames.toList()
@@ -166,7 +188,7 @@ class MainActivity : AppCompatActivity() {
                 val name = names[i]
                 val res = runCatching {
                     contentResolver.openInputStream(uri)?.use { stream ->
-                        Converter.convert(stream, name, options, outDir) { pageNo ->
+                        Converter.convert(applicationContext, stream, name, options) { pageNo ->
                             runOnUiThread {
                                 tvStatus.text = "${getString(R.string.processing)} $name — ${getString(R.string.page)} $pageNo"
                             }
@@ -184,9 +206,8 @@ class MainActivity : AppCompatActivity() {
                     if (res.error != null) {
                         log("✖ $name — ${res.error}")
                     } else {
-                        val fname = res.outputName
                         val merchant = res.merchant?.let { " | ${getString(R.string.merchant)}: $it" } ?: ""
-                        log("✔ $name → $fname (${res.pagesConverted} ${getString(R.string.pages)}, ${res.pagesSkipped} ${getString(R.string.skipped)})$merchant")
+                        log("✔ $name → ${res.outputPath} (${res.pagesConverted} ${getString(R.string.pages)}, ${res.pagesSkipped} ${getString(R.string.skipped)})$merchant")
                     }
                 }
             }
@@ -195,6 +216,7 @@ class MainActivity : AppCompatActivity() {
                 btnConvert.isEnabled = true
                 tvStatus.text = getString(R.string.done)
                 log("✔ ${getString(R.string.finished)} $total ${getString(R.string.files)}")
+                log("📁 ${getString(R.string.saved_in_folder, StorageHelper.FOLDER_NAME)}")
                 if (results.any { it.error == null }) {
                     btnShare.isVisible = true
                     btnShare.text = getString(R.string.share_files, results.count { it.error == null })
@@ -204,11 +226,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun shareResults() {
-        val outDir = File(getExternalFilesDir(null), "PDFConverter")
-        val uris = results.filter { it.error == null }
-            .map { File(outDir, it.outputName) }
-            .filter { it.exists() }
-            .map { FileProvider.getUriForFile(this, "$packageName.fileprovider", it) }
+        val uris = results.filter { it.error == null }.mapNotNull { res ->
+            // MediaStore URI, or fall back to FileProvider for legacy files
+            res.outputUri ?: runCatching {
+                FileProvider.getUriForFile(this, "$packageName.fileprovider", File(res.outputPath))
+            }.getOrNull()
+        }
         if (uris.isEmpty()) return
         val intent = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
             type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"

@@ -33,4 +33,7 @@
     <string name="merchant">التاجر/الوكيل</string>
     <string name="done">اكتمل التحويل ✔</string>
     <string name="finished">اكتمل تحويل</string>
+    <string name="output_folder_info">📁 سيتم إنشاء مجلد «%1$s» في ذاكرة التخزين المحلية وحفظ ملفات Excel داخله</string>
+    <string name="saved_in_folder">تم حفظ جميع الملفات داخل مجلد «%1$s» في ذاكرة التخزين المحلية</string>
+    <string name="storage_permission_needed">يحتاج التطبيق إذن التخزين لإنشاء مجلد «PDF CONVERTER»</string>
 </resources>
