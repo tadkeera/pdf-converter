@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PDF Converter</string>
+    <string name="app_subtitle">تحويل أي عدد من ملفات PDF إلى ملفات Excel منفصلة — حتى 1000 صفحة للملف</string>
+    <string name="pdf_files">ملفات PDF</string>
+    <string name="add_files">➕ إضافة ملفات</string>
+    <string name="clear">✖ مسح</string>
+    <string name="add_hint">اضغط مطولاً لإضافة ملف واحد. عدد الملفات غير محدود.</string>
+    <string name="options">خيارات التحويل</string>
+    <string name="max_pages_label">الحد الأقصى للصفحات في الملف الواحد:</string>
+    <string name="skip_pages_label">استثناء صفحات برقمها (مثال: 1,3,5-9):</string>
+    <string name="skip_pages_hint">مثال: 1,3,5-9</string>
+    <string name="skip_keywords_label">استثناء صفحات بعنوانها/كلماتها (مفصولة بفواصل):</string>
+    <string name="skip_keywords_hint">مثال: شروط, ملخص</string>
+    <string name="auto_name">استخراج اسم التاجر/الوكيل تلقائياً وجعله عنوان ملف الـ Excel</string>
+    <string name="manual_name">اسم يدوي (اختياري — يلغي الاستخراج التلقائي):</string>
+    <string name="manual_name_hint">اسم التاجر/الوكيل…</string>
+    <string name="log">سجل التحويل</string>
+    <string name="ready">جاهز</string>
+    <string name="convert">▶ بدء التحويل</string>
+    <string name="convert_busy">⏳ جارٍ التحويل…</string>
+    <string name="share_files_placeholder">مشاركة الملفات</string>
+    <string name="share_files">📤 مشاركة الملفات المحولة (%1$d)</string>
+    <string name="share_title">مشاركة ملفات Excel</string>
+    <string name="add_files_first">أضف ملفات PDF أولاً</string>
+    <string name="cannot_read_file">تعذر قراءة هذا الملف</string>
+    <string name="starting">بدء التحويل:</string>
+    <string name="files">ملفات</string>
+    <string name="processing">جارٍ المعالجة:</string>
+    <string name="page">صفحة</string>
+    <string name="pages">صفحات</string>
+    <string name="skipped">مستثناة</string>
+    <string name="merchant">التاجر/الوكيل</string>
+    <string name="done">اكتمل التحويل ✔</string>
+    <string name="finished">اكتمل تحويل</string>
+</resources>

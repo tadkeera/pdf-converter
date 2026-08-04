@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PDF Converter</string>
+    <string name="app_subtitle">Convert any number of PDF files into separate Excel files — up to 1000 pages each</string>
+    <string name="pdf_files">PDF files</string>
+    <string name="add_files">+ Add files</string>
+    <string name="clear">Clear</string>
+    <string name="add_hint">Long-press to add a single file. Unlimited number of files.</string>
+    <string name="options">Conversion options</string>
+    <string name="max_pages_label">Max pages per file:</string>
+    <string name="skip_pages_label">Skip pages by number (e.g. 1,3,5-9):</string>
+    <string name="skip_pages_hint">e.g. 1,3,5-9</string>
+    <string name="skip_keywords_label">Skip pages by title / keyword (comma separated):</string>
+    <string name="skip_keywords_hint">e.g. terms, summary</string>
+    <string name="auto_name">Auto-detect merchant/agent name and use it as the Excel file title</string>
+    <string name="manual_name">Manual name (optional — overrides auto detection):</string>
+    <string name="manual_name_hint">Merchant / agent name…</string>
+    <string name="log">Conversion log</string>
+    <string name="ready">Ready</string>
+    <string name="convert">Start conversion</string>
+    <string name="convert_busy">Converting…</string>
+    <string name="share_files_placeholder">Share files</string>
+    <string name="share_files">Share converted files (%1$d)</string>
+    <string name="share_title">Share Excel files</string>
+    <string name="add_files_first">Add PDF files first</string>
+    <string name="cannot_read_file">Cannot read this file</string>
+    <string name="starting">Starting conversion:</string>
+    <string name="files">files</string>
+    <string name="processing">Processing:</string>
+    <string name="page">page</string>
+    <string name="pages">pages</string>
+    <string name="skipped">skipped</string>
+    <string name="merchant">Merchant/Agent</string>
+    <string name="done">Conversion finished ✔</string>
+    <string name="finished">Finished converting</string>
+</resources>

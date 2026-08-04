@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Build outputs (releases are published via GitHub Releases / Actions artifacts)
+dist/
+build/
+desktop/build/
+
+# Android
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/captures/
+*.apk.idsig
+*.jks
+
+# IDE / OS
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Secrets
+*.key
+*.keystore
+.env
